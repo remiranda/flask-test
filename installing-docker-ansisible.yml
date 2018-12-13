@@ -35,7 +35,7 @@
         command: usermod -aG docker ubuntu
 
       - name: Copy file
-        copy: src=/home/rene/Documentos/test-ansible/ormuco-prueb/  dest=/home/ubuntu/ owner=root group=root  mode=0644 backup=yes
+        copy: src=/home/rene/Documentos/flask-test/ormuco-prueb/  dest=/home/ubuntu/ owner=root group=root  mode=0644 backup=yes
 
-      - name: Create docker build the image
-        docker_image: name=built-by-ansible tag=ex1 path=/home/ubuntu/ state=present
+      #- name: Create docker build the image
+      #  docker_image: name=built-by-ansible tag=ex1 path=/home/ubuntu/ state=present
