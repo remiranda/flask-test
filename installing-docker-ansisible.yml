@@ -1,0 +1,41 @@
+---
+  - hosts: test-server
+    remote_user: ubuntu
+    sudo: yes
+
+
+    tasks:
+      - name: Install  python and python-pip
+        apt: name=python state=present update-cache=yes
+        apt: name=python-pip state=present
+
+      - name: Install packages
+        apt: pkg={{item}} state=present
+        with_items:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+
+      - name: Add Docker’s official GPG key
+        apt_key:
+          id: 0EBFCD88
+          url: https://download.docker.com/linux/ubuntu/gpg
+          state: present
+
+      - name: to set up the stable repository
+        apt_repository:
+          repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+          state: present
+
+      - name: Install the latest version of Docker CE
+        apt: name=docker-ce state=present update-cache=yes
+
+      - name: adding your user to the “docker” group
+        command: usermod -aG docker ubuntu
+
+      - name: Copy file
+        copy: src=/home/rene/Documentos/test-ansible/ormuco-prueb/  dest=/home/ubuntu/ owner=root group=root  mode=0644 backup=yes
+
+      - name: Create docker build the image
+        docker_image: name=built-by-ansible tag=ex1 path=/home/ubuntu/ state=present

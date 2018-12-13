@@ -1,0 +1,12 @@
+---
+  - hosts: test-server
+    remote_user: ubuntu
+    sudo: yes
+
+
+    tasks:
+      - name: Install  msql-server system packages
+        apt: name=mysql-server state=present update-cache=yes
+
+      - name: Install system packages
+        apt: name=apache2 state=present
